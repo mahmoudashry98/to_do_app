@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:to_do_app/core/ulits/app_string.dart';
 import 'package:to_do_app/core/ulits/cubit/cubit.dart';
 import 'package:to_do_app/core/ulits/cubit/states.dart';
+import 'package:to_do_app/core/ulits/media_query_values.dart';
 import 'package:to_do_app/presentation/add_task/widgets/customFormField.dart';
 import 'package:to_do_app/presentation/home_board/home_board_screen.dart';
 
+import '../../core/ulits/app_colors.dart';
 import '../../core/ulits/widget/custom_button.dart';
 
 import 'package:intl/intl.dart';
 
+import '../../core/ulits/widget/custom_text.dart';
 import '../../core/ulits/widget/navigate_widget.dart';
 
 class AddTaskScreen extends StatelessWidget {
@@ -30,8 +34,6 @@ class AddTaskScreen extends StatelessWidget {
       builder: (context, state) {
         var cubit = AppCubit.get(context);
         int selectedRemind = cubit.selectedRemind;
-        int selectTaskColor = cubit.selectTaskColor;
-        String selectedRepeat = cubit.selectedRepeat;
         DateTime dateTime = DateTime.now();
         List<int> remindList = cubit.remindList;
         List<String> repeatList = cubit.repeatList;
@@ -40,13 +42,11 @@ class AddTaskScreen extends StatelessWidget {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            title: Text(
-              'Add task',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
+            title: CustomText(
+              text: AppStrings.addTask,
+              color: AppColors.textBlack,
+              fontWeight: FontWeight.bold,
+              size: 20,
             ),
             iconTheme: IconThemeData(
               color: Colors.black,
@@ -62,24 +62,24 @@ class AddTaskScreen extends StatelessWidget {
                   CustomFormField(
                     validate: (String? value) {
                       if (value!.isEmpty) {
-                        return 'text must be not empty';
+                        return AppStrings.validTitle;
                       }
                       return null;
                     },
                     controller: titleController,
-                    title: 'Title',
-                    hintText: 'Design team meeting',
+                    title: AppStrings.title,
+                    hintText: AppStrings.hintTitle,
                   ),
                   CustomFormField(
                     validate: (String? value) {
                       if (value!.isEmpty) {
-                        return 'date must be not empty';
+                        return AppStrings.validDate;
                       }
                       return null;
                     },
                     controller: dateController,
                     hintText: '${DateFormat.yMd().format(dateTime)}',
-                    title: 'Deadline',
+                    title: AppStrings.deadline,
                     icon: Icons.keyboard_arrow_down_outlined,
                     press: () {
                       showDatePicker(
@@ -97,12 +97,12 @@ class AddTaskScreen extends StatelessWidget {
                       CustomFormField(
                         validate: (String? value) {
                           if (value!.isEmpty) {
-                            return 'time must be not empty';
+                            return AppStrings.validtime;
                           }
                           return null;
                         },
                         width: 150,
-                        title: 'Start time',
+                        title: AppStrings.startTime,
                         hintText: '${DateFormat('hh:mm a').format(dateTime)}',
                         icon: Icons.watch_later_outlined,
                         controller: startTimeController,
@@ -120,12 +120,12 @@ class AddTaskScreen extends StatelessWidget {
                       CustomFormField(
                         validate: (String? value) {
                           if (value!.isEmpty) {
-                            return 'must be not empty';
+                            return AppStrings.validtime;
                           }
                           return null;
                         },
                         width: 150,
-                        title: 'End time',
+                        title: AppStrings.endTime,
                         hintText: '14:00 Pm',
                         icon: Icons.watch_later_outlined,
                         controller: endTimeController,
@@ -145,13 +145,13 @@ class AddTaskScreen extends StatelessWidget {
                   CustomFormField(
                     validate: (String? value) {
                       if (value!.isEmpty) {
-                        return 'reminder must be not empty';
+                        return AppStrings.validRemind;
                       }
                       return null;
                     },
                     controller: remindController,
-                    title: 'Remind',
-                    hintText: '$selectedRemind minuter early',
+                    title: AppStrings.remind,
+                    hintText: '$selectedRemind minute early',
                     dropDown: DropdownButton(
                       icon: Icon(
                         Icons.keyboard_arrow_down_outlined,
@@ -176,13 +176,13 @@ class AddTaskScreen extends StatelessWidget {
                   CustomFormField(
                     validate: (String? value) {
                       if (value!.isEmpty) {
-                        return 'repeat must be not empty';
+                        return AppStrings.validRepeat;
                       }
                       return null;
                     },
                     controller: repeatController,
-                    title: 'Repeat',
-                    hintText: '$selectedRepeat',
+                    title: AppStrings.repeat,
+                    hintText: '${AppStrings.none}',
                     dropDown: DropdownButton(
                       icon: Icon(
                         Icons.keyboard_arrow_down_outlined,
@@ -208,13 +208,11 @@ class AddTaskScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 20),
                     child: Row(
                       children: [
-                        Text(
-                          'Color',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
+                        CustomText(
+                          text: AppStrings.color,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          size: 16,
                         ),
                         SizedBox(
                           width: 10,
@@ -235,7 +233,7 @@ class AddTaskScreen extends StatelessWidget {
                                         ? Colors.red
                                         : index == 1
                                             ? Colors.orange
-                                            : Colors.green,
+                                            : AppColors.primaryColor,
                                     child: cubit.selectTaskColor == index
                                         ? Icon(
                                             Icons.done,
@@ -254,9 +252,9 @@ class AddTaskScreen extends StatelessWidget {
                   ),
                   CustomButton(
                     margin: EdgeInsets.all(30),
-                    height: 60,
-                    text: 'Create Task',
-                    color: Colors.green,
+                    height: context.height * .07,
+                    text: AppStrings.createTask,
+                    color: AppColors.primaryColor,
                     press: () async {
                       if (formKey.currentState!.validate()) {
                         cubit.insertToDatabase(

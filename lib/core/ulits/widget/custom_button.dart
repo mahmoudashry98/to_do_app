@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app/core/ulits/app_colors.dart';
+
+import 'custom_text.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -30,13 +33,9 @@ class CustomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Center(
-          child: Text(
-            '$text',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
+          child: CustomText(
+            text: text,
+            color: AppColors.textWhite,
           ),
         ),
       ),

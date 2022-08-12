@@ -6,6 +6,7 @@ import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../../core/ulits/app_string.dart';
 import '../../core/ulits/cubit/cubit.dart';
 
 class NotifyHelper {
@@ -69,9 +70,9 @@ class NotifyHelper {
   ) async {
      
     await flutterLocalNotificationsPlugin.zonedSchedule(
-      task[0]['id'],
-      task[0]['title'],
-      task[0]['title'],
+      task[0][AppStrings.id],
+      task[0][AppStrings.title],
+      task[0][AppStrings.title],
       convertTime(
         hour,
         minutes,

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app/core/ulits/app_colors.dart';
+
+import '../../../core/ulits/widget/custom_text.dart';
 
 class CustomFormField extends StatelessWidget {
   final String title;
@@ -9,7 +12,7 @@ class CustomFormField extends StatelessWidget {
   final GestureTapCallback? press;
   final Widget? dropDown;
   FormFieldValidator<String>? validate;
-   CustomFormField({
+  CustomFormField({
     required this.title,
     required this.hintText,
     this.controller,
@@ -29,13 +32,11 @@ class CustomFormField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
+          CustomText(
+            text: title,
+            color: AppColors.textBlack,
+            fontWeight: FontWeight.bold,
+            size: 16,
           ),
           GestureDetector(
             onTap: press,

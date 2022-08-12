@@ -14,7 +14,7 @@ class UncompletedScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         var tasks = AppCubit.get(context).unCompletedTasks;
-        return taskBuilder(tasks: tasks,context: context);
+        return taskBuilder(tasks: tasks, context: context);
       },
     );
   }

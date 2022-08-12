@@ -14,7 +14,7 @@ class CompletedScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         var tasks = AppCubit.get(context).completedTasks;
-        return taskBuilder(tasks: tasks,context: context);
+        return taskBuilder(tasks: tasks, context: context);
       },
     );
   }
