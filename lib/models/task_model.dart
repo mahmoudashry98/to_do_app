@@ -1,3 +1,5 @@
+import 'package:to_do_app/core/ulits/app_string.dart';
+
 class TaskModel {
   int? id;
   String? title;
@@ -22,26 +24,26 @@ class TaskModel {
   });
 
   TaskModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    title = json['title'];
-    isCompleted = json['isCompleted'];
-    date = json['date'];
-    startTime = json['startTime'];
-    endTime = json['endTime'];
-    color = json['color'];
-    remind = json['remind'];
-    repeat = json['repeat'];
+    id = json[AppStrings.id];
+    title = json[AppStrings.title];
+    isCompleted = json[AppStrings.isCompleted];
+    date = json[AppStrings.date];
+    startTime = json[AppStrings.startTime];
+    endTime = json[AppStrings.endTime];
+    color = json[AppStrings.color];
+    remind = json[AppStrings.remind];
+    repeat = json[AppStrings.repeat];
   }
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['title'] = this.title;
-    data['isCompleted'] = this.isCompleted;
-    data['startTime'] = this.startTime;
-    data['endTime'] = this.endTime;
-    data['color'] = this.color;
-    data['remind'] = this.remind;
-    data['repeat'] = this.repeat;
+    data[AppStrings.id] = this.id;
+    data[AppStrings.title] = this.title;
+    data[AppStrings.isCompleted] = this.isCompleted;
+    data[AppStrings.startTime] = this.startTime;
+    data[AppStrings.endTime] = this.endTime;
+    data[AppStrings.color] = this.color;
+    data[AppStrings.remind] = this.remind;
+    data[AppStrings.repeat] = this.repeat;
     return data;
   }
 }

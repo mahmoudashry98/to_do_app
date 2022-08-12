@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app/core/ulits/app_colors.dart';
+import 'package:to_do_app/core/ulits/assets_images_path.dart';
 import 'package:to_do_app/core/ulits/cubit/cubit.dart';
 
+import '../../../core/ulits/app_string.dart';
 import '../../../core/ulits/widget/custom_button.dart';
+import '../../../core/ulits/widget/custom_text.dart';
 import '../../../core/ulits/widget/navigate_widget.dart';
 import '../../add_task/add_task_screen.dart';
 
@@ -33,7 +37,7 @@ Widget taskBuilder({
                   left: 40,
                   right: 20,
                 ),
-                text: 'Add a task',
+                text: AppStrings.addTask,
                 color: Colors.green,
                 press: () {
                   navigateTo(
@@ -50,15 +54,13 @@ Widget taskBuilder({
           children: [
             Image(
               image: AssetImage(
-                'assets/images/ToDo.png',
+                addTaskImage,
               ),
             ),
-            Text(
-              'No Tasks Yet, Please Add Some Tasks',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
+            CustomText(
+              text: AppStrings.noTasks,
+              size: 16,
+              color: Colors.grey,
             ),
             CustomButton(
               margin: EdgeInsets.only(
@@ -66,8 +68,8 @@ Widget taskBuilder({
                 left: 40,
                 right: 20,
               ),
-              height: 50,
-              text: 'Add a task',
+            height: 50,
+              text: AppStrings.addTask,
               color: Colors.green,
               press: () {
                 navigateTo(
@@ -88,19 +90,17 @@ Widget buildTaskItem(context, Map model) {
         context: context,
         builder: (context) {
           return SimpleDialog(
+            insetPadding: EdgeInsets.all(0),
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(
-              20,
-            )),
+              borderRadius: BorderRadius.circular(20),
+            ),
             backgroundColor: Colors.white,
             contentPadding: const EdgeInsets.all(20),
             children: [
-              Text(
-                '${model['title']}',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+              CustomText(
+                text: '${model['${AppStrings.titleDB}']}',
+                size: 18,
+                fontWeight: FontWeight.bold,
               ),
               SizedBox(
                 height: 10,
@@ -112,15 +112,13 @@ Widget buildTaskItem(context, Map model) {
                     size: 30,
                   ),
                   SizedBox(
-                    width: 5,
+                    width: 10,
                   ),
-                  Text(
-                    '${model['startTime']} -',
-                    style: TextStyle(),
+                  CustomText(
+                    text: '${model['${AppStrings.startTime}']} -',
                   ),
-                  Text(
-                    '${model['endTime']}',
-                    style: TextStyle(),
+                  CustomText(
+                    text: '${model['${AppStrings.endTime}']}',
                   ),
                 ],
               ),
@@ -131,53 +129,53 @@ Widget buildTaskItem(context, Map model) {
                 children: [
                   CustomButton(
                     padding: EdgeInsets.all(10),
-                    text: 'Comleted',
+                    text: AppStrings.completed,
                     color: Colors.green,
                     press: () {
                       cubit.updateData(
-                        status: 'complete',
-                        id: model['id'],
+                        status: AppStrings.complete,
+                        id: model['${AppStrings.id}'],
                       );
                       Navigator.pop(context);
                     },
                   ),
                   SizedBox(
-                    width: 5,
+                    width: 10,
                   ),
                   CustomButton(
                     padding: EdgeInsets.all(10),
-                    text: 'UnComleted',
+                    text: AppStrings.unCompleted,
                     color: Colors.green,
                     press: () {
                       cubit.updateData(
-                        status: 'unComplete',
-                        id: model['id'],
+                        status: AppStrings.unComplete,
+                        id: model['${AppStrings.id}'],
                       );
-                       Navigator.pop(context);
+                      Navigator.pop(context);
                     },
                   ),
                   SizedBox(
-                    width: 5,
+                    width: 10,
                   ),
                   CustomButton(
                     padding: EdgeInsets.all(10),
-                    text: model['favourite'] == 'isFavourite'
+                    text: model['${AppStrings.favourite}'] == 'isFavourite'
                         ? 'UnFavourite'
                         : 'Favourite',
                     color: Colors.green,
                     press: () {
-                      if (model['favourite'] == 'isFavourite') {
+                      if (model['${AppStrings.favourite}'] == 'isFavourite') {
                         cubit.updateFavData(
-                          favourite: 'unFavourite',
-                          id: model['id'],
+                          favourite: '${AppStrings.unfavourite}',
+                          id: model['${AppStrings.id}'],
                         );
                       } else {
                         cubit.updateFavData(
                           favourite: 'isFavourite',
-                          id: model['id'],
+                          id: model['${AppStrings.id}'],
                         );
                       }
-                       Navigator.pop(context);
+                      Navigator.pop(context);
                     },
                   ),
                 ],
@@ -198,7 +196,7 @@ Widget buildTaskItem(context, Map model) {
                 width: 27,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: model['color'] == cubit.selectTaskColor
+                    color: model['${AppStrings.color}'] == cubit.selectTaskColor
                         ? Colors.red
                         : cubit.selectTaskColor == 1
                             ? Colors.orange
@@ -206,8 +204,8 @@ Widget buildTaskItem(context, Map model) {
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(8),
-                  color: model['status'] == 'complete'
-                      ? model['color'] == cubit.selectTaskColor
+                  color: model['${AppStrings.status}'] == AppStrings.complete
+                      ? model['${AppStrings.color}'] == cubit.selectTaskColor
                           ? Colors.red
                           : cubit.selectTaskColor == 1
                               ? Colors.orange
@@ -223,13 +221,11 @@ Widget buildTaskItem(context, Map model) {
               SizedBox(
                 width: 15,
               ),
-              Text(
-                '${model['title']}',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
+              CustomText(
+                text: '${model['${AppStrings.titleDB}']}',
+                color: AppColors.textBlack,
+                size: 18,
+                fontWeight: FontWeight.w500,
               ),
             ],
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app/core/ulits/widget/custom_text.dart';
 
 class CustomDropDown extends StatelessWidget {
   final String? value;
@@ -34,11 +35,9 @@ class CustomDropDown extends StatelessWidget {
     return DropdownMenuItem(
       onTap: press,
       value: item,
-      child: Text(
-        item,
-        style: TextStyle(
-          fontSize: 14,
-        ),
+      child: CustomText(
+        text: item,
+        
       ),
     );
   }

@@ -14,7 +14,7 @@ class FavouriteScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         var tasks = AppCubit.get(context).favouriteTasks;
-        return taskBuilder(tasks: tasks,context: context);
+        return taskBuilder(tasks: tasks, context: context);
       },
     );
   }

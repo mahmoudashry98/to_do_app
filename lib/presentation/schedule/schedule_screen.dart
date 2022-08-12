@@ -2,9 +2,13 @@ import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:to_do_app/core/ulits/app_colors.dart';
 import 'package:to_do_app/core/ulits/cubit/cubit.dart';
 import 'package:to_do_app/core/ulits/cubit/states.dart';
 import 'package:to_do_app/services/local_notification/local_notification.dart';
+
+import '../../core/ulits/app_string.dart';
+import '../../core/ulits/widget/custom_text.dart';
 
 class ScheduleScreen extends StatefulWidget {
   ScheduleScreen({
@@ -35,13 +39,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            title: Text(
-              'Schedule',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
+            title: CustomText(
+              text: AppStrings.schedule,
+              color: AppColors.textBlack,
+              fontWeight: FontWeight.bold,
+              size: 20,
             ),
             iconTheme: IconThemeData(
               color: Colors.black,
@@ -77,34 +79,29 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 ),
                 Row(
                   children: [
-                    Text(
-                      '${DateFormat('EEEE').format(dateTime)}',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    CustomText(
+                      text: '${DateFormat('EEEE').format(dateTime)}',
+                      color: AppColors.textBlack,
+                      size: 16,
+                      fontWeight: FontWeight.bold,
                     ),
                     Spacer(),
                     GestureDetector(
                       onTap: () {
-                       
-                      DateTime date = DateFormat.jm().parse(
-                        cubit.tasks[0]['startTime'].toString(),
-                      );
-                      var myTime = DateFormat('HH:mm').format(date);
-                      notifyHelper.scheduledNotification(
-                        int.parse(myTime.toString().split(":")[0]),
-                        int.parse(myTime.toString().split(":")[1]),
-                        cubit.tasks,
-                      );
+                        DateTime date = DateFormat.jm().parse(
+                          cubit.tasks[0]['${AppStrings.startTime}'].toString(),
+                        );
+                        var myTime = DateFormat('HH:mm').format(date);
+                        notifyHelper.scheduledNotification(
+                          int.parse(myTime.toString().split(":")[0]),
+                          int.parse(myTime.toString().split(":")[1]),
+                          cubit.tasks,
+                        );
                       },
-                      child: Text(
-                        '${DateFormat('d MMM, y').format(dateTime)}',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
+                      child: CustomText(
+                        text: '${DateFormat('d MMM, y').format(dateTime)}',
+                        color: AppColors.textBlack,
+                        size: 16,
                       ),
                     ),
                   ],
@@ -121,7 +118,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                     itemBuilder: (context, index) {
                       var model = cubit.tasks[index];
                       DateTime date = DateFormat.jm().parse(
-                        cubit.tasks[index]['startTime'].toString(),
+                        cubit.tasks[index]['${AppStrings.startTime}']
+                            .toString(),
                       );
                       var myTime = DateFormat('HH:mm').format(date);
                       notifyHelper.scheduledNotification(
@@ -130,14 +128,16 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                         cubit.tasks,
                       );
 
-                      if (model['repeat'] == 'Daily') {
+                      if (model['${AppStrings.repeat}'] ==
+                          '${AppStrings.daily}') {
                         return buildTaskItem(
                           context,
                           model,
                           index,
                         );
                       }
-                      if (model['date'] == DateFormat.yMd().format(dateTime)) {
+                      if (model['${AppStrings.date}'] ==
+                          DateFormat.yMd().format(dateTime)) {
                         return buildTaskItem(
                           context,
                           model,
@@ -166,11 +166,11 @@ Widget buildTaskItem(
   var cubit = AppCubit.get(context);
   var model = cubit.tasks[index];
   return Dismissible(
-    key: Key(model['id'].toString()),
+    key: Key(model['${AppStrings.id}'].toString()),
     child: Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: model['color'] == 0
+        color: model['${AppStrings.color}'] == 0
             ? Colors.red
             : index == 1
                 ? Colors.orange
@@ -187,23 +187,19 @@ Widget buildTaskItem(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '${model['startTime']}',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                CustomText(
+                  text: '${model['${AppStrings.startTime}']}',
+                  color: AppColors.textWhite,
+                  size: 16,
+                  fontWeight: FontWeight.bold,
                 ),
                 SizedBox(
                   height: 5,
                 ),
-                Text(
-                  '${model['title']}',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                  ),
+                CustomText(
+                  text: '${model['${AppStrings.titleDB}']}',
+                  color: AppColors.textWhite,
+                  size: 18,
                 ),
               ],
             ),
@@ -211,7 +207,7 @@ Widget buildTaskItem(
           Spacer(),
           Padding(
             padding: const EdgeInsets.only(right: 20),
-            child: model['status'] == 'complete'
+            child: model['${AppStrings.status}'] == '${AppStrings.complete}'
                 ? Icon(
                     Icons.check_circle_outline,
                     color: Colors.grey[400],
@@ -227,7 +223,7 @@ Widget buildTaskItem(
       ),
     ),
     onDismissed: (direction) {
-      cubit.deleteData(id: data['id']);
+      cubit.deleteData(id: data['${AppStrings.id}']);
     },
   );
 }
