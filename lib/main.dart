@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_app/core/shared/bloc_observer.dart';
 import 'package:to_do_app/core/shared/theme/app_theme.dart';
-import 'package:to_do_app/core/ulits/app_colors.dart';
 import 'package:to_do_app/core/ulits/cubit/cubit.dart';
 import 'package:to_do_app/core/ulits/cubit/states.dart';
 import 'package:to_do_app/presentation/home_board/home_board_screen.dart';
